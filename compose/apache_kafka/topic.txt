@@ -1,0 +1,12 @@
+// create topic
+docker exec broker-kafka \
+kafka-topics --bootstrap-server broker-kafka:9092 \
+             --create \
+             --replication-factor 1 \
+             --topic quickstart
+
+
+// show topic list
+docker exec broker-kafka \
+kafka-topics --bootstrap-server broker-kafka:9092 \
+             --list
