@@ -10,3 +10,11 @@ kafka-topics --bootstrap-server broker-kafka:9092 \
 docker exec broker-kafka \
 kafka-topics --bootstrap-server broker-kafka:9092 \
              --list
+
+// alter add partition
+docker exec broker-kafka \
+kafka-topics \
+--alter \
+--bootstrap-server broker-kafka:9092 \
+--topic arkadia-analytics \
+--partitions 2
