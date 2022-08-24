@@ -18,3 +18,10 @@ kafka-topics \
 --bootstrap-server broker-kafka:9092 \
 --topic arkadia-analytics \
 --partitions 2
+
+// group
+docker exec broker-kafka \
+kafka-console-consumer \
+--bootstrap-server broker-kafka:9092 \
+--topic arkadia-analytics --from-beginning \
+--group g1
