@@ -25,3 +25,10 @@ kafka-console-consumer \
 --bootstrap-server broker-kafka:9092 \
 --topic arkadia-analytics --from-beginning \
 --group g1
+
+// check desc topic
+docker exec broker-kafka \
+kafka-topics \
+--bootstrap-server broker-kafka:9092 \
+--describe
+--topic arkadia-analytics
