@@ -1,16 +1,16 @@
 version: '3'
 services:
   #PHP Service
-  php8.1:
+  php8.2:
     build:
       context: ./dockerfile
-      dockerfile: php8.1
-    container_name: php8.1
+      dockerfile: php8.2
+    container_name: php8.2
     restart: unless-stopped
     tty: true
-    working_dir: /var/www/php/8.1
+    working_dir: /home/php/8.2
     volumes:
-      - ./php/8.1:/var/www/php/8.1
+      - ./php/8.2:/home/php/8.2
     networks:
       - app-network
 
@@ -24,7 +24,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./php:/var/www/php
+      - ./php:/home/php
       - ./nginx/conf.d/enable:/etc/nginx/conf.d/
       - ./nginx/ssl_key/server.crt:/etc/nginx/server.crt
       - ./nginx/ssl_key/server.key:/etc/nginx/server.key
