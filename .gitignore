@@ -1,3 +1,2 @@
-compose/mongodb/mongodb_data
-compose/mysql 5.7/mysql-data
+docker_php_development/apps/php8.2/*
 

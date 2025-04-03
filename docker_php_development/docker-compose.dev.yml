@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_php_dev
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/enable:/etc/nginx/conf.d
+      - ./apps/php8.2:/var/www/php/php8.2
+    depends_on:
+      - php8.2
+    networks:
+      - app-network
+
+  php8.2:
+    build:
+      context: ./php8.2
+      dockerfile: php8.2.dockerfile
+    container_name: php8.2
+    user: "1000:1000"
+    volumes:
+      - ./apps/php8.2:/var/www/php/php8.2
+      - ./php8.2/entrypoint.sh:/var/www/php/php8.2/entrypoint.sh
+    working_dir: /var/www/php/php8.2
+    entrypoint: ["/var/www/php/php8.2/entrypoint.sh"]  # Run permission fix on startup
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
