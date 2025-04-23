@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Install system dependencies for WEBP, MySQL, Redis, and MongoDB
+# Install system dependencies for WEBP, MySQL, Redis, MongoDB, and ZIP
 RUN apt-get update && apt-get install -y \
     zip unzip git curl libpng-dev libjpeg-dev libfreetype6-dev libonig-dev \
     libwebp-dev \
@@ -12,8 +12,9 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libicu-dev \
     libxml2-dev \
+    libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install gd mbstring pdo pdo_mysql exif pcntl bcmath \
+    && docker-php-ext-install gd mbstring pdo pdo_mysql exif pcntl bcmath zip \
     && pecl install redis \
     && pecl install mongodb \
     && docker-php-ext-enable redis mongodb
