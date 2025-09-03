@@ -39,19 +39,32 @@ RUN apt-get update && apt-get install -y --allow-unauthenticated \
     libwebp-dev \
     libjpeg62-turbo-dev \
     pkg-config \
-    libvpx-dev
+    libvpx-dev \
+    libpcre3-dev \
+    re2c \
+    make
 
-
+# Install PHP extensions via PECL
 RUN pecl install \
     mongodb-1.7.5 \
     redis-4.3.0
 
+# Enable PHP extensions
 RUN docker-php-ext-enable \
     mongodb \
     redis
 
+# Install Phalcon 3.4.5
+ENV PHALCON_VERSION=3.4.5
+RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VERSION}" | tar -xz \
+    && cd cphalcon-${PHALCON_VERSION}/build \
+    && ./install \
+    && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/50-phalcon.ini \
+    && cd ../../ \
+    && rm -rf cphalcon-${PHALCON_VERSION}
+
 # Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Configure and install GD extension with WebP support
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-vpx-dir=/usr/include/
