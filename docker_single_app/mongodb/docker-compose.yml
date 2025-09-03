@@ -1,12 +1,10 @@
-version: '2'
+version: '3.8'  # or omit the version line entirely
 services:
   mongodb:
     image: mongo:4.4.14
     container_name: mongodb_4.4.14
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
-      - 27017:27017
+      - "27017:27017"  # Consider using a different host port in production
     volumes:
       - ./mongodb_data:/data/db
+    restart: unless-stopped  # Optional but recommended for persistent services

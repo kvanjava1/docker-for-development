@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Install system dependencies for WEBP, MySQL, Redis, MongoDB, and ZIP
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     zip unzip git curl libpng-dev libjpeg-dev libfreetype6-dev libonig-dev \
     libwebp-dev \
@@ -13,11 +13,13 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libxml2-dev \
     libzip-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install gd mbstring pdo pdo_mysql exif pcntl bcmath zip \
-    && pecl install redis \
-    && pecl install mongodb \
-    && docker-php-ext-enable redis mongodb
+    libmagickwand-dev && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
+    docker-php-ext-install gd mbstring pdo pdo_mysql exif pcntl bcmath zip && \
+    pecl install imagick && \
+    pecl install redis && \
+    pecl install mongodb && \
+    docker-php-ext-enable imagick redis mongodb
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
